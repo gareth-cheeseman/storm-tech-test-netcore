@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Identity;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
 using Todo.Models.TodoItems;
+using Todo.Tests.TodoListUtilities;
 using Xunit;
 
-namespace Todo.Tests
+namespace Todo.Tests.FieldFactoryTests
 {
     public class WhenTodoItemIsConvertedToEditFields
     {

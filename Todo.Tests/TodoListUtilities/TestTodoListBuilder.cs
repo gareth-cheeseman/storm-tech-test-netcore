@@ -3,7 +3,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Todo.Data.Entities;
 
-namespace Todo.Tests
+namespace Todo.Tests.TodoListUtilities
 {
     /*
      * This class makes it easier for tests to create new TodoLists with TodoItems correctly hooked up
