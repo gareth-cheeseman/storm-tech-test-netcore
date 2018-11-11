@@ -2,15 +2,12 @@
 
 namespace Todo.Models.TodoItems
 {
-    public class TodoItemEditFields
+    public class TodoItemEditFields : TodoBase
     {
-        public int TodoListId { get; set; }
-        public string Title { get; set; }
-        public string TodoListTitle { get; set; }
+       
         public int TodoItemId { get; set; }
         public bool IsDone { get; set; }
-        public string ResponsiblePartyId { get; set; }
-        public Importance Importance { get; set; }
+        
 
         public TodoItemEditFields() { }
 
