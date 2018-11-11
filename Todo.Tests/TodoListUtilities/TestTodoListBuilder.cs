@@ -32,6 +32,7 @@ namespace Todo.Tests.TodoListUtilities
             var todoItems = items.Select(itm => new TodoItem(todoList.TodoListId, owner.Id, itm.Item1, itm.Item2));
             todoItems.ToList().ForEach(tlItm =>
             {
+                tlItm.ResponsibleParty = todoList.Owner;
                 todoList.Items.Add(tlItm);
                 tlItm.TodoList = todoList;
             });

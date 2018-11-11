@@ -52,5 +52,13 @@ namespace Todo.Tests.FieldFactoryTests
         {
             Assert.Equal(srcTodoItem.IsDone, resultFields.IsDone);
         }
+
+        [Fact]
+        public void EqualResponsibleParty()
+        {
+            Assert.Equal(UserSummaryViewmodelFactory.Create(srcTodoItem.ResponsibleParty).UserName, resultFields.ResponsibleParty.UserName);
+            Assert.Equal(UserSummaryViewmodelFactory.Create(srcTodoItem.ResponsibleParty).Email, resultFields.ResponsibleParty.Email);
+
+        }
     }
 }
