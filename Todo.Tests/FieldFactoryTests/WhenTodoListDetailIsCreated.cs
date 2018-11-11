@@ -46,5 +46,14 @@ namespace Todo.Tests.FieldFactoryTests
             Assert.Equal(srcTodoList.Items.Count, resultFields.Items.Count);
         }
 
+        [Fact]
+        public void ItemsOrderedByImportance()
+        {
+            var expected = srcTodoList.Items.OrderBy(item => item.Importance).Select(item => item.Title);
+            var actual = resultFields.Items.Select(item => item.Title);
+
+            Assert.Equal(expected, actual);
+        }
+
     }
 }
