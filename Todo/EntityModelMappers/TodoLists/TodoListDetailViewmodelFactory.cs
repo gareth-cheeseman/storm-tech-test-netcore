@@ -9,11 +9,15 @@ namespace Todo.EntityModelMappers.TodoLists
 {
     public static class TodoListDetailViewmodelFactory
     {
-        public static TodoListDetailViewmodel Create(TodoList todoList)
+        public static TodoListDetailViewmodel Create(TodoList todoList, bool hideDone)
         {
             var items = todoList.Items.Select(TodoItemSummaryViewmodelFactory.Create).ToList();
             items = items.OrderBy(item => item.Importance).ToList();
-            return new TodoListDetailViewmodel(todoList.TodoListId, todoList.Title, items);
+            if (hideDone)
+            {
+                items = items.Where(item => item.IsDone == false).ToList();
+            }
+            return new TodoListDetailViewmodel(todoList.TodoListId, todoList.Title, items, hideDone);
         }
     }
 }

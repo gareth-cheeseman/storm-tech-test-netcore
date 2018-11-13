@@ -25,7 +25,7 @@ namespace Todo.Tests.FieldFactoryTests
                     .WithItem("tomato", Importance.Medium)
                     .Build();
 
-            resultFields = TodoListDetailViewmodelFactory.Create(srcTodoList);
+            resultFields = TodoListDetailViewmodelFactory.Create(srcTodoList, false);
         }
 
         [Fact]
