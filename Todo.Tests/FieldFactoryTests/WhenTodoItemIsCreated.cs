@@ -29,8 +29,7 @@ namespace Todo.Tests.FieldFactoryTests
         [Fact]
         public void EqualTitle()
         {
-            resultFields.Title.ShouldBe(srcTodoList.Title);
-            Assert.Equal(srcTodoList.Title, resultFields.TodoListTitle);
+            resultFields.TodoListTitle.ShouldBe(srcTodoList.Title);
         }
 
         [Fact]
