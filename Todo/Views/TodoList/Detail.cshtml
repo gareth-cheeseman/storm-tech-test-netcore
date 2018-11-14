@@ -52,6 +52,11 @@
                             }
                         </a>
                     </div>
+                    
+                    <div class="col-md-10">
+                            <strong>Rank</strong>
+                            <span class="badge">@item.Rank</span>
+                    </div>
 
                     <div class="col-md-4 text-right">
                         <small>
@@ -66,8 +71,8 @@
             </li>
         }
     </ul>
-    
-        <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-hideDone="@(!Model.HideDone)">
+    <div>
+        <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId"  asp-route-orderByRank="@Model.OrderByRank" asp-route-hideDone="@(!Model.HideDone)">
             @if (Model.HideDone)
             {
                 <strong>Show done items</strong>
@@ -77,4 +82,18 @@
                 <strong>Hide done items</strong>
             }
         </a>
+    </div>
+    
+    <div>
+        <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@(!Model.OrderByRank)" asp-route-hideDone="@Model.HideDone">
+            @if (Model.OrderByRank)
+            {
+                <strong>Do not sort items by rank</strong>
+            }
+            else
+            {
+                <strong>Sort items by rank</strong>
+            }
+        </a>
+    </div>
 </div>

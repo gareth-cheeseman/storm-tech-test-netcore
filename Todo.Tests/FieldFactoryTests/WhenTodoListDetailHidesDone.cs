@@ -26,7 +26,7 @@ namespace Todo.Tests.FieldFactoryTests
 
             srcTodoList.Items.FirstOrDefault().IsDone = true;
 
-            resultFields = TodoListDetailViewmodelFactory.Create(srcTodoList, true);
+            resultFields = TodoListDetailViewmodelFactory.Create(srcTodoList, true, false);
         }
 
         [Fact]

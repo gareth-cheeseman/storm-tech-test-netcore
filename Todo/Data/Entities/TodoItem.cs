@@ -22,6 +22,7 @@ namespace Todo.Data.Entities {
             ResponsiblePartyId = responsiblePartyId;
             Title = title;
             Importance = importance;
+            
         }
     }
 }
