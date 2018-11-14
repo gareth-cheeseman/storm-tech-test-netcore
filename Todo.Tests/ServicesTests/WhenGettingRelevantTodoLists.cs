@@ -1,59 +1,76 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Runtime.InteropServices.ComTypes;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
-using Moq;
 using Todo.Data;
 using Todo.Data.Entities;
+using Todo.Services;
 using Todo.Tests.TodoListUtilities;
 using Xunit;
 
 namespace Todo.Tests.ServicesTests
 {
-   
-
-    public class WhenGettingRelevantTodoLists
+    public class WhenGettingRelevantTodoLists : InMemoryDbTest
     {
-        public Mock<IApplicationDbContext> DbContext { get; set; }
-        public List<TodoList> SrcTodoLists { get; set; }
+        private TodoList todoList1 { get; }
+        private TodoList todoList2 { get; }
 
 
         public WhenGettingRelevantTodoLists()
         {
-            DbContext = new Mock<IApplicationDbContext>();
-            DbContext.SetupProperty(db => db.TodoLists);
-
-            SrcTodoLists = new List<TodoList>
-            {
-
-                new TestTodoListBuilder(new IdentityUser("alice@example.com"), "shopping")
-                    .WithItem("bread", Importance.High)
-                    .WithItem("milk", Importance.High)
-                    .WithItem("cheese", Importance.Medium)
-                    .WithItem("lettuce", Importance.Low)
-                    .WithItem("tomato", Importance.Medium)
-                    .Build(),
-                new TestTodoListBuilder(new IdentityUser("alice@example.com"), "workshop")
-                    .WithItem("timber", Importance.High)
-                    .WithItem("saw", Importance.High)
-                    .WithItem("drill", Importance.Medium)
-                    .WithItem("bench", Importance.Low)
-                    .WithItem("vacuum", Importance.Medium)
-                    .Build()
-
-
-            };
-
-            DbContext.Object.TodoLists = new InternalDbSet<TodoList>();
+            todoList1 = new TestTodoListBuilder(new IdentityUser("alice@example.com"), "shopping")
+                .WithItem("bread", Importance.High)
+                .WithItem("milk", Importance.High)
+                .WithItem("cheese", Importance.Medium)
+                .WithItem("lettuce", Importance.Low)
+                .WithItem("tomato", Importance.Medium)
+                .Build();
+            todoList2 = new TestTodoListBuilder(new IdentityUser("bob@example.com"), "workshop")
+                .WithItem("timber", Importance.High)
+                .WithItem("saw", Importance.High)
+                .WithItem("drill", Importance.Medium)
+                .WithItem("bench", Importance.Low)
+                .WithItem("vacuum", Importance.Medium)
+                .Build();
         }
 
+
         [Fact]
-        public void Whatever()
+        public void UserDoesNotGetListNotOwnerOrResponsible()
         {
-            Assert.True(DbContext.Object.TodoLists.Count().Equals(2));
+            WithContext(context =>
+            {
+                context.AddRange(todoList1, todoList2);
+                context.SaveChanges();
+            });
+
+            WithContext(context =>
+            {
+                var expected = new List<int> {todoList1.TodoListId};
+                var actual = context.RelevantTodoLists(todoList1.Owner.Id).Select(tl => tl.TodoListId).ToList();
+                Assert.Equal(expected, actual);
+            });
+        }
+
+
+        [Fact]
+        public void UserGetsListOwnedAndResponsible()
+        {
+            WithContext(context =>
+            {
+                todoList2.Items.FirstOrDefault().ResponsiblePartyId = todoList1.Owner.Id;
+                context.AddRange(todoList1, todoList2);
+                context.SaveChanges();
+            });
+
+            WithContext(context =>
+            {
+                var expected = new List<int> {todoList1.TodoListId, todoList2.TodoListId}.OrderBy(id => id);
+                var actual = context.RelevantTodoLists(todoList1.Owner.Id).Select(tl => tl.TodoListId).OrderBy(id => id);
+                Assert.Equal(expected, actual);
+            });
         }
     }
 }
