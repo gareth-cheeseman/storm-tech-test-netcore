@@ -1,5 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Shouldly;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
 using Todo.Models.TodoItems;
@@ -17,8 +18,7 @@ namespace Todo.Tests.FieldFactoryTests
         {
             var todoList = new TestTodoListBuilder(new IdentityUser("alice@example.com"), "shopping")
                     .WithItem("bread", Importance.High)
-                    .Build()
-                ;
+                    .Build();
 
             srcTodoItem = todoList.Items.First();
 
@@ -28,19 +28,19 @@ namespace Todo.Tests.FieldFactoryTests
         [Fact]
         public void EqualTodoListId()
         {
-            Assert.Equal(srcTodoItem.TodoListId, resultFields.TodoListId);
+            resultFields.TodoItemId.ShouldBe(srcTodoItem.TodoListId);
         }
 
         [Fact]
         public void EqualTitle()
         {
-            Assert.Equal(srcTodoItem.Title, resultFields.Title);
+            resultFields.Title.ShouldBe(srcTodoItem.Title);
         }
 
         [Fact]
         public void EqualImportance()
         {
-            Assert.Equal(srcTodoItem.Importance, resultFields.Importance);
+            resultFields.Importance.ShouldBe(srcTodoItem.Importance);
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Shouldly;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoLists;
 using Todo.Models.TodoLists;
@@ -31,8 +32,8 @@ namespace Todo.Tests.FieldFactoryTests
         [Fact]
         public void DoneItemsHidden()
         {
-            Assert.True(resultFields.Items.All(item => item.IsDone == false));
-            Assert.Equal(srcTodoList.Items.Count - 1 , resultFields.Items.Count);
+            resultFields.Items.All(item => item.IsDone).ShouldBeFalse();
+           resultFields.Items.Count.ShouldBe(srcTodoList.Items.Count -1);
         }
 
     }

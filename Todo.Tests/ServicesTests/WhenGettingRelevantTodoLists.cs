@@ -4,6 +4,7 @@ using System.Runtime.InteropServices.ComTypes;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Shouldly;
 using Todo.Data;
 using Todo.Data.Entities;
 using Todo.Services;
@@ -48,9 +49,13 @@ namespace Todo.Tests.ServicesTests
 
             WithContext(context =>
             {
-                var expected = new List<int> {todoList1.TodoListId};
-                var actual = context.RelevantTodoLists(todoList1.Owner.Id).Select(tl => tl.TodoListId).ToList();
-                Assert.Equal(expected, actual);
+                context.RelevantTodoLists(todoList1.Owner.Id)
+                    .Select(tl => tl.TodoListId)
+                    .ToList()
+                    .ShouldBe(new List<int>()
+                    {
+                        todoList1.TodoListId
+                    });
             });
         }
 
@@ -67,9 +72,14 @@ namespace Todo.Tests.ServicesTests
 
             WithContext(context =>
             {
-                var expected = new List<int> {todoList1.TodoListId, todoList2.TodoListId}.OrderBy(id => id);
-                var actual = context.RelevantTodoLists(todoList1.Owner.Id).Select(tl => tl.TodoListId).OrderBy(id => id);
-                Assert.Equal(expected, actual);
+                context.RelevantTodoLists(todoList1.Owner.Id)
+                    .Select(tl => tl.TodoListId)
+                    .OrderBy(id => id)
+                    .ShouldBe(new List<int>
+                    {
+                        todoList1.TodoListId,
+                        todoList2.TodoListId
+                    }.OrderBy(id => id));
             });
         }
     }

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Shouldly;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
 using Todo.EntityModelMappers.TodoLists;
@@ -37,26 +38,26 @@ namespace Todo.Tests.FieldFactoryTests
         [Fact]
         public void EqualTodoListId()
         {
-            Assert.Equal(srcTodoList.TodoListId, resultFields.TodoListId);
+            resultFields.TodoListId.ShouldBe(srcTodoList.TodoListId);
         }
 
         [Fact]
         public void EqualTitle()
         {
-            Assert.Equal(srcTodoList.Title, resultFields.Title);
+            resultFields.Title.ShouldBe(srcTodoList.Title);
         }
 
         [Fact]
         public void EqualOwner()
         {
-            Assert.Equal(srcTodoList.Owner.UserName, resultFields.Owner.UserName);
+            resultFields.Owner.UserName.ShouldBe(srcTodoList.Owner.UserName);
         }
 
 
         [Fact]
         public void EqualCountIsDone()
         {
-            Assert.Equal(srcTodoList.Items.Count(i => !i.IsDone), resultFields.NumberOfNotDoneItems);
+            resultFields.NumberOfNotDoneItems.ShouldBe(srcTodoList.Items.Count(item => !item.IsDone));
         }
 
 

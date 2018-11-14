@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Shouldly;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoLists;
 using Todo.Models.TodoLists;
@@ -44,7 +45,7 @@ namespace Todo.Tests.FieldFactoryTests
         [Fact]
         public void EqualItemsCount()
         {
-            Assert.Equal(srcTodoLists.Count(), resultFields.Lists.Count);
+            resultFields.Lists.Count.ShouldBe(srcTodoLists.Count());
         }
 
     }

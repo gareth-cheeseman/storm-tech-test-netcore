@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Identity;
+using Shouldly;
 using Todo.EntityModelMappers.TodoItems;
 using Todo.Models.TodoItems;
 using Xunit;
@@ -22,13 +23,13 @@ namespace Todo.Tests.FieldFactoryTests
         [Fact]
         public void EqualUsername()
         {
-            Assert.Equal(user.UserName, resultFields.UserName);
+            resultFields.UserName.ShouldBe(user.UserName);
         }
 
         [Fact]
         public void EqualEmail()
         {
-            Assert.Equal(user.Email, resultFields.Email);
+            resultFields.Email.ShouldBe(user.Email);
         }
 
     }

@@ -1,5 +1,6 @@
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
+using Shouldly;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
 using Todo.Models.TodoItems;
@@ -32,33 +33,33 @@ namespace Todo.Tests.FieldFactoryTests
         [Fact]
         public void EqualTodoItemId()
         {
-            Assert.Equal(srcTodoItem.TodoListId, resultFields.TodoItemId);
+            resultFields.TodoItemId.ShouldBe(srcTodoItem.TodoListId);
         }
 
         [Fact]
         public void EqualTitle()
         {
-            Assert.Equal(srcTodoItem.Title, resultFields.Title);
+            resultFields.Title.ShouldBe(srcTodoItem.Title);
         }
 
         [Fact]
         public void EqualImportance()
         {
-            Assert.Equal(srcTodoItem.Importance, resultFields.Importance);
+            resultFields.Importance.ShouldBe(srcTodoItem.Importance);
         }
 
         [Fact]
         public void EqualIsDone()
         {
-            Assert.Equal(srcTodoItem.IsDone, resultFields.IsDone);
+            resultFields.IsDone.ShouldBe(srcTodoItem.IsDone);
         }
 
         [Fact]
         public void EqualResponsibleParty()
         {
-            Assert.Equal(UserSummaryViewmodelFactory.Create(srcTodoItem.ResponsibleParty).UserName, resultFields.ResponsibleParty.UserName);
-            Assert.Equal(UserSummaryViewmodelFactory.Create(srcTodoItem.ResponsibleParty).Email, resultFields.ResponsibleParty.Email);
-
+            var srcResponsibleParty = UserSummaryViewmodelFactory.Create(srcTodoItem.ResponsibleParty);
+            resultFields.ResponsibleParty.UserName.ShouldBe(srcResponsibleParty.UserName);
+            resultFields.ResponsibleParty.Email.ShouldBe(srcResponsibleParty.Email);
         }
     }
 }
