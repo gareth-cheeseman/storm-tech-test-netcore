@@ -6,7 +6,7 @@
 @{
     ViewData["Title"] = $"List: {Model.Title}";
 }
-
+<script src="~/js/gravatarName.js"></script>
 
 <h2>@ViewData["Title"]</h2>
 
@@ -63,10 +63,8 @@
                         <small>
                             @item.ResponsibleParty.UserName 
                             <span id="gravatarName@(item.TodoItemId)"></span>
-                            <script>window.getName = function(res){
-                                document.getElementById("gravatarName@(item.TodoItemId)").innerHTML = res.entry[0].displayName;
-                                </script>
-                            <script src="https://www.gravatar.com/(@Gravatar.GetHash(item.ResponsibleParty.Email)).json?callback=getName"></script>
+                            <script>window.hash = "@Gravatar.GetHash(item.ResponsibleParty.Email)"</script>
+                            <script>getGravatarName(window.hash, "gravatarName@(item.TodoItemId)" )</script>
                             <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
                            
 
