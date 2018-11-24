@@ -7,6 +7,7 @@
     ViewData["Title"] = $"List: {Model.Title}";
 }
 
+
 <h2>@ViewData["Title"]</h2>
 
 <div class="col-md-6">
@@ -58,11 +59,16 @@
                             <span class="badge">@item.Rank</span>
                     </div>
 
-                    <div class="col-md-4 text-right">
+                    <div class="col-md-4 text-left">
                         <small>
-                            @item.ResponsibleParty.UserName
-
+                            @item.ResponsibleParty.UserName 
+                            <span id="gravatarName@(item.TodoItemId)"></span>
+                            <script>window.getName = function(res){
+                                document.getElementById("gravatarName@(item.TodoItemId)").innerHTML = res.entry[0].displayName;
+                                </script>
+                            <script src="https://www.gravatar.com/(@Gravatar.GetHash(item.ResponsibleParty.Email)).json?callback=getName"></script>
                             <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
+                           
 
                         </small>
                     </div>
