@@ -62,10 +62,9 @@
                     <div class="col-md-4 text-left">
                         <small>
                             @item.ResponsibleParty.UserName 
-                            <span id="gravatarName@(item.TodoItemId)"></span>
-                            <script>window.hash = "@Gravatar.GetHash(item.ResponsibleParty.Email)"</script>
-                            <script>getGravatarName(window.hash, "gravatarName@(item.TodoItemId)" )</script>
-                            <img src="https://www.gravatar.com/avatar/@Gravatar.GetHash(item.ResponsibleParty.Email)?s=30"/>
+                            <img data-hash="@Gravatar.GetHash(item.ResponsibleParty.Email)" src="~/images/DefaultProfile.jpg"/>
+                            <span data-hash="@Gravatar.GetHash(item.ResponsibleParty.Email)">GravatarName</span>
+
                            
 
                         </small>
@@ -75,6 +74,10 @@
             </li>
         }
     </ul>
+
+    <script>Gravatar.namesCall()</script>
+    <script>Gravatar.imagesCall()</script>
+
     <div>
         <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId"  asp-route-orderByRank="@Model.OrderByRank" asp-route-hideDone="@(!Model.HideDone)">
             @if (Model.HideDone)
