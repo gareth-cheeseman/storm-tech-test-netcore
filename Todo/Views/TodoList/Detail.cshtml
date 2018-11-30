@@ -37,7 +37,7 @@
             }
 
             <li class="list-group-item @contextualClass">
-                
+
                 <div class="row">
 
                     <div class="col-md-8">
@@ -53,19 +53,20 @@
                             }
                         </a>
                     </div>
-                    
+
                     <div class="col-md-10">
-                            <strong>Rank</strong>
-                            <span class="badge">@item.Rank</span>
+                        <strong>Rank</strong>
+                        <span class="badge">@item.Rank</span>
                     </div>
 
                     <div class="col-md-4 text-left">
                         <small>
-                            @item.ResponsibleParty.UserName 
-                            <img data-hash="@Gravatar.GetHash(item.ResponsibleParty.Email)" src="~/images/DefaultProfile.jpg"/>
-                            <span data-hash="@Gravatar.GetHash(item.ResponsibleParty.Email)">GravatarName</span>
+                            @item.ResponsibleParty.UserName
+                            @*<img data-hash="@Gravatar.GetHash(item.ResponsibleParty.Email)" src="~/images/DefaultProfile.jpg" />
+                            <span data-hash="@Gravatar.GetHash(item.ResponsibleParty.Email)">GravatarName</span>*@
+                            <strong><gravatar-name res-party="@item.ResponsibleParty.Email"></gravatar-name></strong>
 
-                           
+
 
                         </small>
                     </div>
@@ -79,7 +80,7 @@
     <script>Gravatar.imagesCall()</script>
 
     <div>
-        <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId"  asp-route-orderByRank="@Model.OrderByRank" asp-route-hideDone="@(!Model.HideDone)">
+        <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@Model.OrderByRank" asp-route-hideDone="@(!Model.HideDone)">
             @if (Model.HideDone)
             {
                 <strong>Show done items</strong>
@@ -90,7 +91,7 @@
             }
         </a>
     </div>
-    
+
     <div>
         <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@(!Model.OrderByRank)" asp-route-hideDone="@Model.HideDone">
             @if (Model.OrderByRank)
