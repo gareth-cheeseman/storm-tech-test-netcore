@@ -15,7 +15,7 @@ namespace Todo.Services
 
         public string ImageUrl(string hash, int size)
         {
-            return $"https://www.gravatar.com/avatar/${hash}?s={size}";
+            return $"https://www.gravatar.com/avatar/{hash}?s={size}";
         }
     }
 }
