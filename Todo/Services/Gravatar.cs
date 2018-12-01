@@ -1,17 +1,24 @@
 ﻿using System;
+using System.Buffers.Text;
 using System.Net.Http;
-using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Newtonsoft.Json;
-using Todo.TagHelpers;
 
 namespace Todo.Services
 {
     public  class Gravatar : IGravatar
     {
+        private IGravatarUrl _gravatarUrl;
+        private HttpClient _client;
+
+        public Gravatar(IGravatarUrl gravatarUrl)
+        {
+            _gravatarUrl = gravatarUrl;
+            _client = new HttpClient();
+            _client.DefaultRequestHeaders.Add("User-Agent", "C# app");
+        }
         
         public  async Task<string> GetGravatarName(string hash)
         {
@@ -20,17 +27,23 @@ namespace Todo.Services
 
         }
 
+        public async Task<string> GetGravatarImage(string hash)
+        {
+            var url = _gravatarUrl.ImageUrl(hash, 30);
+            var result = await _client.GetByteArrayAsync(url);
+            return "data:image/png;base64," + Convert.ToBase64String(result);
+            
+        }
+
 
         public async Task<GravatarResponse> GetProfileJson(string hash)
         {
-            var url = $"https://www.gravatar.com/{hash}.json";
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("User-Agent", "C# app");
-            var result = await httpClient.GetStringAsync(url);
+            var url = _gravatarUrl.ProfileUrl(hash);
+            var result = await _client.GetStringAsync(url);
             return JsonConvert.DeserializeObject<GravatarResponse>(result);
         }
 
-        
+         
         public class GravatarResponse
         {
             public GravatarEntry[] Entry { get; set; }
@@ -56,7 +69,7 @@ namespace Todo.Services
             public string type { get; set; }
         }
 
-        public static string GetHash(string emailAddress)
+        public string GetHash(string emailAddress)
         {
             using (var md5 = MD5.Create())
             {

@@ -6,7 +6,6 @@
 @{
     ViewData["Title"] = $"List: {Model.Title}";
 }
-<script src="~/js/gravatar.js"></script>
 
 <h2>@ViewData["Title"]</h2>
 
@@ -62,10 +61,8 @@
                     <div class="col-md-4 text-left">
                         <small>
                             @item.ResponsibleParty.UserName
-                            @*<img data-hash="@Gravatar.GetHash(item.ResponsibleParty.Email)" src="~/images/DefaultProfile.jpg" />
-                            <span data-hash="@Gravatar.GetHash(item.ResponsibleParty.Email)">GravatarName</span>*@
-                            <strong><gravatar-name res-party="@item.ResponsibleParty.Email"></gravatar-name></strong>
-
+                            <strong data-gravatar-name res-party="@item.ResponsibleParty.Email"></strong>
+                            <img data-gravatar-image res-party="@item.ResponsibleParty.Email"/>
 
 
                         </small>
@@ -75,9 +72,6 @@
             </li>
         }
     </ul>
-
-    <script>Gravatar.namesCall()</script>
-    <script>Gravatar.imagesCall()</script>
 
     <div>
         <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@Model.OrderByRank" asp-route-hideDone="@(!Model.HideDone)">
