@@ -63,5 +63,26 @@ namespace Todo.Tests.ServicesTests
             var outputSrcValue = output.Attributes[output.Attributes.IndexOfName("src")];
             outputSrcValue.Value.ShouldBe("image");
         }
+
+        [Fact]
+        public void WhenGravatarNameHashIsInCache()
+        {
+            //Arrange
+            context = new TagHelperContextBuilder()
+                .AddAttribute("data-gravatar-name", "")
+                .Build();
+            output = new TagHelperOutputBuilder("strong").Build();
+            gravatarTagHelper = new GravatarTagHelper(Cache, mockGravatar.Object);
+            
+            //Act
+            gravatarTagHelper.ProcessAsync(context, output).Wait();
+            gravatarTagHelper.ProcessAsync(context, output).Wait();
+
+
+            //Assert
+            mockGravatar.Verify(g => g.GetGravatarName(It.IsAny<string>()), Times.Once);
+
+
+        }
     }
 }
