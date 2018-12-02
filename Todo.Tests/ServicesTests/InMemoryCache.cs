@@ -7,16 +7,16 @@ namespace Todo.Tests.ServicesTests
 {
     public class InMemoryCache : IDisposable
     {
-        protected IMemoryCache _cache;
+        protected IMemoryCache Cache;
 
         public InMemoryCache()
         {
-            _cache = new MemoryCache(new MemoryCacheOptions());
+            Cache = new MemoryCache(new MemoryCacheOptions());
         }
 
         public void Dispose()
         {
-            _cache?.Dispose();
+            Cache?.Dispose();
         }
     }
 }
