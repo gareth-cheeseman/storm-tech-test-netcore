@@ -9,13 +9,13 @@ namespace Todo.Services
     {
         public string ProfileUrl(string hash)
         {
-            return $"https://www.gravatar.com/{hash}.json";
+            return $"/{hash}.json";
 
         }
 
         public string ImageUrl(string hash, int size)
         {
-            return $"https://www.gravatar.com/avatar/{hash}?s={size}";
+            return $"/avatar/{hash}?s={size}";
         }
     }
 }

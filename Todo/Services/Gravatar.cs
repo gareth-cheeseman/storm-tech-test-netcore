@@ -1,46 +1,68 @@
 ﻿using System;
 using System.Buffers.Text;
+using System.IO;
 using System.Net.Http;
+using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using RestSharp;
 
 namespace Todo.Services
 {
     public  class Gravatar : IGravatar
     {
         private IGravatarUrl _gravatarUrl;
-        private HttpClient _client;
+        private IRestClient _client;
 
-        public Gravatar(IGravatarUrl gravatarUrl)
+        public Gravatar(IGravatarUrl gravatarUrl, IRestClient client)
         {
             _gravatarUrl = gravatarUrl;
-            _client = new HttpClient();
-            _client.DefaultRequestHeaders.Add("User-Agent", "C# app");
+            _client = client;
+            _client.UserAgent = "C# app";
+            _client.BaseUrl = new Uri("https://gravatar.com");
+            _client.Timeout = 1000;
         }
-        
-        public  async Task<string> GetGravatarName(string hash)
+
+        public async Task<string> GetGravatarName(string hash)
         {
             var profile = await GetProfileJson(hash);
-            return profile.Entry[0].displayName;
-
+            return profile == null ?  "Gravatar unavailable" : profile.Entry[0].displayName;
         }
 
         public async Task<string> GetGravatarImage(string hash)
         {
             var url = _gravatarUrl.ImageUrl(hash, 30);
-            var result = await _client.GetByteArrayAsync(url);
-            return "data:image/png;base64," + Convert.ToBase64String(result);
-            
+            var restRequest = new RestRequest {Resource = url};
+            var result = await _client.ExecuteTaskAsync(restRequest);
+            if (result.IsSuccessful)
+            {
+                return "data:image/png;base64," + Convert.ToBase64String(result.RawBytes);
+            }
+
+            var data = "./wwwroot/images/DefaultProfile.png".ReadImageFile();
+            return "data:image/png;base64," + Convert.ToBase64String(data);
         }
 
 
         public async Task<GravatarResponse> GetProfileJson(string hash)
         {
             var url = _gravatarUrl.ProfileUrl(hash);
-            var result = await _client.GetStringAsync(url);
-            return JsonConvert.DeserializeObject<GravatarResponse>(result);
+            var restRequest = new RestRequest {Resource = url};
+            var result = await _client.ExecuteTaskAsync(restRequest);
+            if (!result.IsSuccessful)
+            {
+                result = await _client.ExecuteTaskAsync(restRequest);
+            }
+            
+            if (result.IsSuccessful)
+            {
+                return JsonConvert.DeserializeObject<GravatarResponse>(result.Content);
+
+            }
+
+            return null;
         }
 
          

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Razor.TagHelpers;
-using Moq;
+﻿using Moq;
 using Todo.Services;
 
 namespace Todo.Tests.ServicesTests
