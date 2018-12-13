@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Todo.Data;
 using Todo.Data.Entities;
+using Todo.Services;
 
 namespace Todo.Controllers
 {
@@ -14,18 +17,22 @@ namespace Todo.Controllers
     [ApiController]
     public class TodoListsApiController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext dbContext;
+        private readonly IUserStore<IdentityUser> userStore;
 
-        public TodoListsApiController(ApplicationDbContext context)
+
+        public TodoListsApiController(ApplicationDbContext dbContext, IUserStore<IdentityUser> userStore)
         {
-            _context = context;
+            this.dbContext = dbContext;
+            this.userStore = userStore;
+
         }
 
         // GET: api/TodoListsApi
         [HttpGet]
         public IEnumerable<TodoList> GetTodoLists()
         {
-            return _context.TodoLists;
+            return dbContext.TodoLists;
         }
 
         // GET: api/TodoListsApi/5
@@ -37,8 +44,8 @@ namespace Todo.Controllers
                 return BadRequest(ModelState);
             }
 
-            var todoList = await _context.TodoLists.FindAsync(id);
-
+//            var todoList = await dbContext.TodoLists.FindAsync(id);
+            var todoList = await dbContext.SingleTodoListAsync(id);
             if (todoList == null)
             {
                 return NotFound();
@@ -61,11 +68,11 @@ namespace Todo.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(todoList).State = EntityState.Modified;
+            dbContext.Entry(todoList).State = EntityState.Modified;
 
             try
             {
-                await _context.SaveChangesAsync();
+                await dbContext.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -91,8 +98,8 @@ namespace Todo.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.TodoLists.Add(todoList);
-            await _context.SaveChangesAsync();
+            dbContext.TodoLists.Add(todoList);
+            await dbContext.SaveChangesAsync();
 
             return CreatedAtAction("GetTodoList", new { id = todoList.TodoListId }, todoList);
         }
@@ -106,21 +113,21 @@ namespace Todo.Controllers
                 return BadRequest(ModelState);
             }
 
-            var todoList = await _context.TodoLists.FindAsync(id);
+            var todoList = await dbContext.TodoLists.FindAsync(id);
             if (todoList == null)
             {
                 return NotFound();
             }
 
-            _context.TodoLists.Remove(todoList);
-            await _context.SaveChangesAsync();
+            dbContext.TodoLists.Remove(todoList);
+            await dbContext.SaveChangesAsync();
 
             return Ok(todoList);
         }
 
         private bool TodoListExists(int id)
         {
-            return _context.TodoLists.Any(e => e.TodoListId == id);
+            return dbContext.TodoLists.Any(e => e.TodoListId == id);
         }
     }
 }

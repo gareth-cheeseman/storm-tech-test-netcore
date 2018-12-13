@@ -1,6 +1,5 @@
 export const todoSummary = (todoItemId, title, rank, responsiblePartyId) => {
-
-    const template =  `<li class="list-group-item">
+  const template = `<li class="list-group-item">
     <div class="row">
       <div class="col-md-8">
         <a href="/TodoItem/Edit?todoItemId=${todoItemId}">${title}</a>
@@ -17,7 +16,5 @@ export const todoSummary = (todoItemId, title, rank, responsiblePartyId) => {
     </div>
     </li>`;
 
-    return template;
-}
-
-
+  return template;
+};

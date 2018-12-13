@@ -6,7 +6,12 @@ export const listTodos = url => {
     todos.forEach(todo => {
       const { todoItemId, title, rank, responsiblePartyId } = todo;
 
-      const todoSummaryView = todoSummary(todoItemId, title, rank, responsiblePartyId);
+      const todoSummaryView = todoSummary(
+        todoItemId,
+        title,
+        rank,
+        responsiblePartyId
+      );
 
       const fragment = document
         .createRange()
