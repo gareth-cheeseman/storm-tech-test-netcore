@@ -7,72 +7,77 @@
     ViewData["Title"] = $"List: {Model.Title}";
 }
 
+
+
 <h2>@ViewData["Title"]</h2>
 
 <div class="col-md-6">
+        <ul class="list-group" id="todos"></ul>
 
+    <noscript>
     <ul class="list-group">
-
-        <li class="list-group-item">
-            <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
-                <strong>Add New Item</strong>
-            </a>
-        </li>
-
-        @foreach (var item in Model.Items)
-        {
-            string contextualClass;
-            switch (item.Importance)
-            {
-                case Importance.High:
-                    contextualClass = "list-group-item-danger";
-                    break;
-                case Importance.Low:
-                    contextualClass = "list-group-item-info";
-                    break;
-                default:
-                    contextualClass = "";
-                    break;
-            }
-
-            <li class="list-group-item @contextualClass">
-
-                <div class="row">
-
-                    <div class="col-md-8">
-                        <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
-
-                            @if (item.IsDone)
-                            {
-                                <s>@item.Title</s>
-                            }
-                            else
-                            {
-                                <text>@item.Title</text>
-                            }
-                        </a>
-                    </div>
-
-                    <div class="col-md-10">
-                        <strong>Rank</strong>
-                        <span class="badge">@item.Rank</span>
-                    </div>
-
-                    <div class="col-md-4 text-left">
-                        <small>
-                            @item.ResponsibleParty.UserName
-                            <strong data-gravatar-name res-party="@item.ResponsibleParty.Email"></strong>
-                            <img data-gravatar-image res-party="@item.ResponsibleParty.Email"/>
-
-
-                        </small>
-                    </div>
-                </div>
-
+        
+            <li class="list-group-item">
+                <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
+                    <strong>Add New Item</strong>
+                </a>
             </li>
-        }
-    </ul>
 
+            @foreach (var item in Model.Items)
+            {
+                string contextualClass;
+                switch (item.Importance)
+                {
+                    case Importance.High:
+                        contextualClass = "list-group-item-danger";
+                        break;
+                    case Importance.Low:
+                        contextualClass = "list-group-item-info";
+                        break;
+                    default:
+                        contextualClass = "";
+                        break;
+                }
+
+                <li class="list-group-item @contextualClass">
+
+                    <div class="row">
+
+                        <div class="col-md-8">
+                            <a asp-action="Edit" asp-controller="TodoItem" asp-route-todoItemId="@item.TodoItemId">
+
+                                @if (item.IsDone)
+                                {
+                                    <s>@item.Title</s>
+                                }
+                                else
+                                {
+                                    <text>@item.Title</text>
+                                }
+                            </a>
+                        </div>
+
+                        <div class="col-md-10">
+                            <strong>Rank</strong>
+                            <span class="badge">@item.Rank</span>
+                        </div>
+
+                        <div class="col-md-4 text-left">
+                            <small>
+                                @item.ResponsibleParty.UserName
+                                <strong data-gravatar-name res-party="@item.ResponsibleParty.Email"></strong>
+                                <img data-gravatar-image res-party="@item.ResponsibleParty.Email" />
+
+
+                            </small>
+                        </div>
+                    </div>
+
+                </li>
+            }
+        
+    </ul>
+</noscript>
     <div>
         <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@Model.OrderByRank" asp-route-hideDone="@(!Model.HideDone)">
             @if (Model.HideDone)
@@ -99,3 +104,9 @@
         </a>
     </div>
 </div>
+@section Scripts{
+    <script type="module">
+    import {getTodos} from '../js/Todos.js';
+    getTodos("/api/TodoItemsApi")
+    </script>
+}
