@@ -33,6 +33,17 @@ namespace Todo.Tests.ServicesTests
         }
 
         [Fact]
+        public void ClientInputsCorrect()
+        {
+            mockRestClient = new MockRestClient();
+            gravatar = new Gravatar(new GravatarUrl(), mockRestClient.Object);
+
+            mockRestClient.BaseUrl.ShouldBe(new Uri("https://gravatar.com"));
+            mockRestClient.UserAgent.ShouldBe("C# app");
+            mockRestClient.Timeout.ShouldBe(1000);
+        }
+
+        [Fact]
         public void WhenGravatarApiBadRequest()
         {
             mockRestClient = new MockRestClient().ExecuteTaskAsync(responseBadRequest);
