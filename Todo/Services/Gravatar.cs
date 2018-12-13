@@ -13,16 +13,16 @@ namespace Todo.Services
 {
     public  class Gravatar : IGravatar
     {
-        private IGravatarUrl _gravatarUrl;
-        private IRestClient _client;
+        private IGravatarUrl gravatarUrl;
+        private IRestClient client;
 
         public Gravatar(IGravatarUrl gravatarUrl, IRestClient client)
         {
-            _gravatarUrl = gravatarUrl;
-            _client = client;
-            _client.UserAgent = "C# app";
-            _client.BaseUrl = new Uri("https://gravatar.com");
-            _client.Timeout = 1000;
+            this.gravatarUrl = gravatarUrl;
+            this.client = client;
+            this.client.UserAgent = "C# app";
+            this.client.BaseUrl = new Uri("https://gravatar.com");
+            this.client.Timeout = 1000;
         }
 
         public async Task<string> GetGravatarName(string hash)
@@ -33,9 +33,9 @@ namespace Todo.Services
 
         public async Task<string> GetGravatarImage(string hash)
         {
-            var url = _gravatarUrl.ImageUrl(hash, 30);
+            var url = gravatarUrl.ImageUrl(hash, 30);
             var restRequest = new RestRequest {Resource = url};
-            var result = await _client.ExecuteTaskAsync(restRequest);
+            var result = await client.ExecuteTaskAsync(restRequest);
             if (result.IsSuccessful)
             {
                 return "data:image/png;base64," + Convert.ToBase64String(result.RawBytes);
@@ -48,12 +48,12 @@ namespace Todo.Services
 
         public async Task<GravatarResponse> GetProfileJson(string hash)
         {
-            var url = _gravatarUrl.ProfileUrl(hash);
+            var url = gravatarUrl.ProfileUrl(hash);
             var restRequest = new RestRequest {Resource = url};
-            var result = await _client.ExecuteTaskAsync(restRequest);
+            var result = await client.ExecuteTaskAsync(restRequest);
             if (!result.IsSuccessful)
             {
-                result = await _client.ExecuteTaskAsync(restRequest);
+                result = await client.ExecuteTaskAsync(restRequest);
             }
             
             if (result.IsSuccessful)

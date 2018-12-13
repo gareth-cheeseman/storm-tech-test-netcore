@@ -10,31 +10,31 @@ namespace Todo.TagHelpers
     [HtmlTargetElement(Attributes = "data-gravatar-image")]
     public class GravatarTagHelper : TagHelper
     {
-        private readonly IMemoryCache _cache;
-        private readonly IGravatar _gravatar;
+        private readonly IMemoryCache cache;
+        private readonly IGravatar gravatar;
 
         public GravatarTagHelper(IMemoryCache cache, IGravatar gravatar)
         {
-            _cache = cache;
-            _gravatar = gravatar;
+            this.cache = cache;
+            this.gravatar = gravatar;
         }
 
         public string ResParty { get; set; }
 
         public override async Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
         {
-            var hash = _gravatar.GetHash(ResParty);
+            var hash = gravatar.GetHash(ResParty);
 
-            if (!_cache.TryGetValue(hash, out var cacheEntry))
+            if (!cache.TryGetValue(hash, out var cacheEntry))
             {
-                var name = await _gravatar.GetGravatarName(hash);
-                var image = await _gravatar.GetGravatarImage(hash);
+                var name = await gravatar.GetGravatarName(hash);
+                var image = await gravatar.GetGravatarImage(hash);
 
                 cacheEntry =  new GravatarProfile(name, image);
 
                 var cacheEntryOptions = new MemoryCacheEntryOptions().SetSlidingExpiration(TimeSpan.FromMinutes(10));
 
-                _cache.Set(hash, cacheEntry, cacheEntryOptions);
+                cache.Set(hash, cacheEntry, cacheEntryOptions);
             }
 
             var profile = cacheEntry as GravatarProfile;
