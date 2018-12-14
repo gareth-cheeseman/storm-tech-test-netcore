@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Todo.Data;
 using Todo.Data.Entities;
+using Todo.EntityModelMappers.TodoLists;
 using Todo.Services;
 
 namespace Todo.Controllers
@@ -44,8 +45,8 @@ namespace Todo.Controllers
                 return BadRequest(ModelState);
             }
 
-//            var todoList = await dbContext.TodoLists.FindAsync(id);
             var todoList = await dbContext.SingleTodoListAsync(id);
+
             if (todoList == null)
             {
                 return NotFound();
