@@ -52,7 +52,10 @@ namespace Todo.Controllers
                 return NotFound();
             }
 
-            return Ok(todoList);
+            var items = TodoListDetailApimodelFactory.Create(todoList);
+
+
+            return Ok(items);
         }
 
         // PUT: api/TodoListsApi/5

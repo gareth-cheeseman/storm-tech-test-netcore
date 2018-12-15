@@ -1,5 +1,23 @@
-export const todoSummary = (todoItemId, title, rank, responsiblePartyId) => {
-  const template = `<li class="list-group-item">
+export const todoSummary = (
+  todoItemId,
+  title,
+  responsibleParty,
+  importance,
+  rank
+) => {
+  const impStyle = impt => {
+    switch (impt) {
+      case 0:
+        return 'list-group-item-danger';
+        break;
+      case 2:
+        return 'list-group-item-infor';
+        break;
+      default:
+        break;
+    }
+  };
+  const template = `<li class="list-group-item ${impStyle(importance)}">
     <div class="row">
       <div class="col-md-8">
         <a href="/TodoItem/Edit?todoItemId=${todoItemId}">${title}</a>
@@ -11,7 +29,7 @@ export const todoSummary = (todoItemId, title, rank, responsiblePartyId) => {
       </div>
     
       <div class="col-md-4 text-left">
-        <small>${responsiblePartyId}<small />
+        <small>${responsibleParty.userName}<small />
       </div>
     </div>
     </li>`;

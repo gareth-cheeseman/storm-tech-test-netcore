@@ -4,13 +4,14 @@ import { todoSummary } from './TodoSummary.js';
 export const listTodos = url => {
   getJson(url).then(todos =>
     todos.forEach(todo => {
-      const { todoItemId, title, rank, responsiblePartyId } = todo;
+      const { todoItemId, title, responsibleParty, importance, rank } = todo;
 
       const todoSummaryView = todoSummary(
         todoItemId,
         title,
-        rank,
-        responsiblePartyId
+        responsibleParty,
+        importance,
+        rank
       );
 
       const fragment = document
