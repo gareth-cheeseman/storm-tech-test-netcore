@@ -9,9 +9,11 @@ namespace Todo.EntityModelMappers.TodoLists
 {
     public static class TodoListDetailApimodelFactory
     {
-        public static ICollection<TodoItemSummaryApiModel> Create(TodoList todoList)
+        public static TodoListDetailApimodel Create(TodoList todoList)
         {
-            return todoList.Items.Select(item => new TodoItemSummaryApiModel(item.TodoItemId, item.Title, new UserSummaryViewmodel(item.ResponsibleParty.UserName, item.ResponsibleParty.Email), item.Importance, item.Rank)).ToList();
+            var todos = todoList.Items.Select(TodoItemSummaryModelFactory.Create).ToList();
+
+            return new TodoListDetailApimodel(todoList.TodoListId, todoList.Title, todos);
         }
     }
 }

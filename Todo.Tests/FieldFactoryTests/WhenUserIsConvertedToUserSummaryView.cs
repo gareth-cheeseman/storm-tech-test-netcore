@@ -9,7 +9,7 @@ namespace Todo.Tests.FieldFactoryTests
     public class WhenUserIsConvertedToUserSummaryView
     {
         private readonly IdentityUser user;
-        private readonly UserSummaryViewmodel resultFields;
+        private readonly UserSummaryModel resultFields;
 
         public WhenUserIsConvertedToUserSummaryView()
         {

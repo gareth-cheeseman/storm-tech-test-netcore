@@ -7,11 +7,11 @@ namespace Todo.Models.TodoLists
     {
         public int TodoListId { get; }
         public string Title { get; }
-        public ICollection<TodoItemSummaryViewmodel> Items { get; }
+        public ICollection<TodoItemSummaryModel> Items { get; }
         public bool HideDone { get; set; }
         public bool OrderByRank { get; set; }
 
-        public TodoListDetailViewmodel(int todoListId, string title, ICollection<TodoItemSummaryViewmodel> items, bool hideDone, bool orderByRank)
+        public TodoListDetailViewmodel(int todoListId, string title, ICollection<TodoItemSummaryModel> items, bool hideDone, bool orderByRank)
         {
             Items = items;
             TodoListId = todoListId;

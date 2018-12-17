@@ -2,8 +2,8 @@ import { getJson } from './FetchService.js';
 import { todoSummary } from './TodoSummary.js';
 
 export const listTodos = url => {
-  getJson(url).then(todos =>
-    todos.forEach(todo => {
+  getJson(url).then(todoList =>
+    todoList.items.forEach(todo => {
       const { todoItemId, title, responsibleParty, importance, rank } = todo;
 
       const todoSummaryView = todoSummary(

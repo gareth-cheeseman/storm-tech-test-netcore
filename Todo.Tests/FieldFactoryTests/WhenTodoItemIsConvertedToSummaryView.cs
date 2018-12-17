@@ -12,7 +12,7 @@ namespace Todo.Tests.FieldFactoryTests
     public class WhenTodoItemIsConvertedToSummaryView
     {
         private readonly TodoItem srcTodoItem;
-        private readonly TodoItemSummaryViewmodel resultFields;
+        private readonly TodoItemSummaryModel resultFields;
 
         public WhenTodoItemIsConvertedToSummaryView()
         {
@@ -27,7 +27,7 @@ namespace Todo.Tests.FieldFactoryTests
             srcTodoItem.IsDone = true;
             srcTodoItem.ResponsibleParty = todoList.Owner;
 
-            resultFields = TodoItemSummaryViewmodelFactory.Create(srcTodoItem);
+            resultFields = TodoItemSummaryModelFactory.Create(srcTodoItem);
         }
 
         [Fact]

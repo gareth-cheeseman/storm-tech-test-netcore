@@ -20,7 +20,7 @@ namespace Todo.EntityModelMappers.TodoLists
                      .ThenBy(item => item.Importance) :
                 items.OrderBy(item => item.Importance);
 
-            var viewModelItems = items.Select(TodoItemSummaryViewmodelFactory.Create).ToList();
+            var viewModelItems = items.Select(TodoItemSummaryModelFactory.Create).ToList();
 
             return new TodoListDetailViewmodel(todoList.TodoListId, todoList.Title, viewModelItems, hideDone, orderByRank);
         }
