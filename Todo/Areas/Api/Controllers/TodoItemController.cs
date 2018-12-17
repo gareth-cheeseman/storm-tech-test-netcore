@@ -1,35 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Todo.Data;
 using Todo.Data.Entities;
 
-namespace Todo.Controllers
+namespace Todo.Areas.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsApiController : ControllerBase
+    public class TodoItemController : ControllerBase
     {
         private readonly ApplicationDbContext context;
 
-        public TodoItemsApiController(ApplicationDbContext context)
+        public TodoItemController(ApplicationDbContext context)
         {
             this.context = context;
         }
 
-        // GET: api/TodoItemsApi
+        // GET: api/TodoItem
         [HttpGet]
         public IEnumerable<TodoItem> GetTodoItems()
         {
             return context.TodoItems;
         }
 
-        // GET: api/TodoItemsApi/5
+        // GET: api/TodoItem/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTodoItem([FromRoute] int id)
         {
@@ -48,7 +45,7 @@ namespace Todo.Controllers
             return Ok(todoItem);
         }
 
-        // PUT: api/TodoItemsApi/5
+        // PUT: api/TodoItem/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoItem([FromRoute] int id, [FromBody] TodoItem todoItem)
         {
@@ -83,7 +80,7 @@ namespace Todo.Controllers
             return NoContent();
         }
 
-        // POST: api/TodoItemsApi
+        // POST: api/TodoItem
         [HttpPost]
         public async Task<IActionResult> PostTodoItem([FromBody] TodoItem todoItem)
         {
@@ -98,7 +95,7 @@ namespace Todo.Controllers
             return CreatedAtAction("GetTodoItem", new { id = todoItem.TodoItemId }, todoItem);
         }
 
-        // DELETE: api/TodoItemsApi/5
+        // DELETE: api/TodoItem/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoItem([FromRoute] int id)
         {

@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,31 +9,31 @@ using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoLists;
 using Todo.Services;
 
-namespace Todo.Controllers
+namespace Todo.Areas.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoListsApiController : ControllerBase
+    public class TodoListController : ControllerBase
     {
         private readonly ApplicationDbContext dbContext;
         private readonly IUserStore<IdentityUser> userStore;
 
 
-        public TodoListsApiController(ApplicationDbContext dbContext, IUserStore<IdentityUser> userStore)
+        public TodoListController(ApplicationDbContext dbContext, IUserStore<IdentityUser> userStore)
         {
             this.dbContext = dbContext;
             this.userStore = userStore;
 
         }
 
-        // GET: api/TodoListsApi
+        // GET: api/TodoList
         [HttpGet]
         public IEnumerable<TodoList> GetTodoLists()
         {
             return dbContext.TodoLists;
         }
 
-        // GET: api/TodoListsApi/5
+        // GET: api/TodoList/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetTodoList([FromRoute] int id)
         {
@@ -58,7 +55,7 @@ namespace Todo.Controllers
             return Ok(items);
         }
 
-        // PUT: api/TodoListsApi/5
+        // PUT: api/TodoList/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTodoList([FromRoute] int id, [FromBody] TodoList todoList)
         {
@@ -93,7 +90,7 @@ namespace Todo.Controllers
             return NoContent();
         }
 
-        // POST: api/TodoListsApi
+        // POST: api/TodoList
         [HttpPost]
         public async Task<IActionResult> PostTodoList([FromBody] TodoList todoList)
         {
@@ -108,7 +105,7 @@ namespace Todo.Controllers
             return CreatedAtAction("GetTodoList", new { id = todoList.TodoListId }, todoList);
         }
 
-        // DELETE: api/TodoListsApi/5
+        // DELETE: api/TodoList/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTodoList([FromRoute] int id)
         {
