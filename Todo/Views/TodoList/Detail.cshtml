@@ -106,7 +106,7 @@
 </div>
 @section Scripts{
     <script type="module">
-    import {listTodos} from '../js/TodoListDetail.js';
-        listTodos("/api/TodoList/@Model.TodoListId")
+    import {detail} from '../js/TodoListDetail.js';
+        detail("/api/TodoList/", "@Model.TodoListId")
     </script>
 }
