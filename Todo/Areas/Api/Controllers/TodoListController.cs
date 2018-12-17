@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Todo.Services;
 
 namespace Todo.Areas.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class TodoListController : ControllerBase
@@ -57,6 +59,7 @@ namespace Todo.Areas.Api.Controllers
 
         // PUT: api/TodoList/5
         [HttpPut("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PutTodoList([FromRoute] int id, [FromBody] TodoList todoList)
         {
             if (!ModelState.IsValid)
@@ -92,6 +95,7 @@ namespace Todo.Areas.Api.Controllers
 
         // POST: api/TodoList
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> PostTodoList([FromBody] TodoList todoList)
         {
             if (!ModelState.IsValid)
@@ -107,6 +111,7 @@ namespace Todo.Areas.Api.Controllers
 
         // DELETE: api/TodoList/5
         [HttpDelete("{id}")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteTodoList([FromRoute] int id)
         {
             if (!ModelState.IsValid)
