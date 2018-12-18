@@ -42,7 +42,7 @@ export const todoSummaryBuild = todo => {
     
       <div class="col-md-4 text-left">
         <small>${todo.responsibleParty.userName}
-        <strong data-gravatar-name data-hash="${hash}"></strong>
+        <strong data-gravatar-name data-hash="${hash}">Getting Gravatar Name</strong>
         <img data-gravatar-image data-hahs="${hash}" src=""></small>
       </div>
     </div>
