@@ -1,5 +1,6 @@
 import { getJson } from './FetchService.js';
 import { todoSummaryBuild } from './TodoSummaryBuilder.js';
+import { getGravatarName } from './Gravatar.js';
 
 export const detailBuild = (url, todoListId) => {
   getJson(url + todoListId).then(todoList => {
@@ -16,6 +17,7 @@ export const detailBuild = (url, todoListId) => {
         const todoList = document.querySelector('#todos');
         todoList.append(fragment);
       });
+      getGravatarName();
     } else {
       console.log('Wrong list returned');
     }

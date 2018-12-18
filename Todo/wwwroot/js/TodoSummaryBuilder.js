@@ -1,3 +1,12 @@
+import {
+  generateHash,
+  gravatarNameUrl,
+  getGravatarName,
+  getGravatarNameCallback,
+  gravatarImageUrl,
+  getGravatarImage
+} from './Gravatar.js';
+
 export const todoSummaryBuild = todo => {
   const getImportanceClass = impt => {
     switch (impt) {
@@ -14,15 +23,16 @@ export const todoSummaryBuild = todo => {
 
   const importanceClass = getImportanceClass(todo.importance);
 
-  const gravatarNameHtml = 'test gravatar name';
+  const titleWithTag = todo.isDone ? `<s>${todo.title}</s>` : `${todo.title}`;
 
-  const gravatarImageHtml =
-    '<img src="https://res.cloudinary.com/hellofresh/image/upload/f_auto,fl_lossy,q_auto,w_640/v1/hellofresh_s3/image/556c0f17f8b25e8d628b4568.png">';
+  const hash = generateHash(todo.responsibleParty.email);
 
   const template = `<li class="list-group-item ${importanceClass}">
     <div class="row">
       <div class="col-md-8">
-        <a href="/TodoItem/Edit?todoItemId=${todo.todoItemId}">${todo.title}</a>
+        <a href="/TodoItem/Edit?todoItemId=${
+          todo.todoItemId
+        }">${titleWithTag}</a>
       </div>
     
       <div class="col-md-10">
@@ -32,8 +42,8 @@ export const todoSummaryBuild = todo => {
     
       <div class="col-md-4 text-left">
         <small>${todo.responsibleParty.userName}
-        ${gravatarNameHtml}
-        ${gravatarImageHtml}<small />
+        <strong data-gravatar-name data-hash="${hash}"></strong>
+        <img data-gravatar-image data-hahs="${hash}" src=""></small>
       </div>
     </div>
     </li>`;

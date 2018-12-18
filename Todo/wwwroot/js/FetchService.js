@@ -7,6 +7,15 @@ export const getJson = url => {
   });
 };
 
+export const getBlob = url => {
+  return fetch(url).then(response => {
+    if (!response.ok) {
+      throw response;
+    }
+    return response.blob;
+  });
+};
+
 export const postJson = (url, body) => {
   const options = {
     method: 'POST',
