@@ -18,21 +18,37 @@ export const getUniqueHashes = () => {
 };
 
 export const getGravatarName = () => {
-  getUniqueHashes().forEach(hash => {
-    const gravatarNameScript = document.createElement('script');
-    gravatarNameScript.async;
-    gravatarNameScript.src = gravatarNameUrl(hash);
-    document.body.append(gravatarNameScript);
+  var hashes = getUniqueHashes();
+
+  hashes.forEach(hash => {
+    const key = hash + 'name';
+    const gravatarNameObject = localStorage.getObject(key);
+    if (!gravatarNameObject || gravatarNameObject.expiry < Date.now()) {
+      const gravatarNameScript = document.createElement('script');
+      gravatarNameScript.src = gravatarNameUrl(hash);
+      document.body.append(gravatarNameScript);
+    } else {
+      const elements = document.querySelectorAll(
+        `[data-gravatar-name][data-hash="${hash}"]`
+      );
+      elements.forEach(
+        element => (element.textContent = gravatarNameObject.name)
+      );
+    }
   });
 };
 
-export const getGravatarNameCallback = res => {
-  let name = res.entry[0].displayName;
-  let hash = res.entry[0].requestHash;
+window.getGravatarNameCallback = res => {
+  const name = res.entry[0].displayName;
+  const expiry = Date.now() + 604800000; //one week
+  const hash = res.entry[0].requestHash;
+  const key = hash + 'name';
+  const value = { name: name, expiry: expiry };
+  localStorage.setObject(key, value);
   const elements = document.querySelectorAll(
-    `[data-gravatar-name data-hash="${hash}"]`
+    `[data-gravatar-name][data-hash="${hash}"]`
   );
-  elements.forEach(element => (element.innerHTML = name));
+  elements.forEach(element => (element.textContent = name));
 };
 
 export const getGravatarImage = () => {

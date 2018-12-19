@@ -17,10 +17,10 @@ export const detailBuild = (url, todoListId) => {
         const todoList = document.querySelector('#todos');
         todoList.append(fragment);
       });
-      getGravatarName();
       getGravatarImage();
     } else {
       console.log('Wrong list returned');
     }
+    getGravatarName();
   });
 };

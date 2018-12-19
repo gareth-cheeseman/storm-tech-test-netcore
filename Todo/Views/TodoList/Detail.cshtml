@@ -105,15 +105,6 @@
     </div>
 </div>
 @section Scripts{
-    <script>
-        window.getGravatarNameCallback = function(res) {          
-        let name = res.entry[0].displayName;
-        let hash = res.entry[0].requestHash;
-        const elements = document.querySelectorAll(`strong[data-hash="${hash}"]`);
-        elements.forEach(element => (element.innerHTML = name));
-    };    
-    </script>
-
     <script type="module">
         import {detailBuild} from '../js/DetailBuilder.js';
         detailBuild("/api/TodoList/", "@Model.TodoListId")
