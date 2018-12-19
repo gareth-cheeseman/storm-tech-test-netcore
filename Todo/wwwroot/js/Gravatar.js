@@ -1,5 +1,3 @@
-import { getBlob } from './FetchService.js';
-
 export const generateHash = email => {
   return SparkMD5.hash(email);
 };
@@ -9,7 +7,7 @@ export const gravatarNameUrl = hash => {
 };
 
 export const gravatarImageUrl = hash => {
-  return `https://gravatar.com/avatar/${hash}?=30`;
+  return `https://gravatar.com/avatar/${hash}?s=30`;
 };
 
 export const getUniqueHashes = () => {
@@ -32,15 +30,14 @@ export const getGravatarNameCallback = res => {
   let name = res.entry[0].displayName;
   let hash = res.entry[0].requestHash;
   const elements = document.querySelectorAll(
-    `[data-gravatar-name data-hash=${hash}]`
+    `[data-gravatar-name data-hash="${hash}"]`
   );
   elements.forEach(element => (element.innerHTML = name));
 };
 
-export const getGravatarImage = url => {
-  getBlob(url).then(body => {
-    const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
-    reader.readAsDataURL(body);
+export const getGravatarImage = () => {
+  getUniqueHashes().forEach(hash => {
+    const elements = document.querySelectorAll(`img[data-hash="${hash}"]`);
+    elements.forEach(element => (element.src = gravatarImageUrl(hash)));
   });
 };
