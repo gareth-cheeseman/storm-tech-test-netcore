@@ -18,9 +18,9 @@ export const detailBuild = (url, todoListId) => {
         todoList.append(fragment);
       });
       getGravatarImage();
+      getGravatarName();
     } else {
       console.log('Wrong list returned');
     }
-    getGravatarName();
   });
 };

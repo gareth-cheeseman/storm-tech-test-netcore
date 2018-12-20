@@ -1,30 +1,28 @@
-export const getJson = url => {
-  return fetch(url).then(response => {
-    if (!response.ok) {
-      throw response;
-    }
-    return response.json();
-  });
+export const getJson = async url => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw response;
+  }
+  return response.json();
 };
 
-export const getBlob = url => {
-  return fetch(url).then(response => {
-    if (!response.ok) {
-      throw response;
-    }
-    return response.blob;
-  });
+export const getBlob = async url => {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw response;
+  }
+  console.log(response);
+  return response.blob;
 };
 
-export const postJson = (url, body) => {
+export const postJson = async (url, body) => {
   const options = {
     method: 'POST',
     body: JSON.stringify(body)
   };
-  return fetch(url, options).then(response => {
-    if (!response.ok) {
-      throw response;
-    }
-    return response.json();
-  });
+  const response = await fetch(url, options);
+  if (!response.ok) {
+    throw response;
+  }
+  return response.json();
 };
