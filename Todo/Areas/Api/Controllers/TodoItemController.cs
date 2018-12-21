@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Todo.Data;
 using Todo.Data.Entities;
+using Todo.Filters;
 
 namespace Todo.Areas.Api.Controllers
 {

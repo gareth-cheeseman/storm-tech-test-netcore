@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Todo.Data;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoLists;
+using Todo.Filters;
 using Todo.Services;
 
 namespace Todo.Areas.Api.Controllers

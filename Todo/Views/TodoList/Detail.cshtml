@@ -12,11 +12,16 @@
 <h2>@ViewData["Title"]</h2>
 
 <div class="col-md-6">
+
+    @if (ViewData["IsJavascriptOn"].Equals(true))
+    {
         <ul class="list-group" id="todos"></ul>
 
-    <noscript>
-    <ul class="list-group">
-        
+    }
+    else
+    {
+        <ul class="list-group">
+
             <li class="list-group-item">
                 <a asp-action="Create" asp-controller="TodoItem" asp-route-todoListId="@Model.TodoListId">
                     <strong>Add New Item</strong>
@@ -75,34 +80,36 @@
 
                 </li>
             }
-        
-    </ul>
-</noscript>
-    <div>
-        <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@Model.OrderByRank" asp-route-hideDone="@(!Model.HideDone)">
-            @if (Model.HideDone)
-            {
-                <strong>Show done items</strong>
-            }
-            else
-            {
-                <strong>Hide done items</strong>
-            }
-        </a>
-    </div>
 
-    <div>
-        <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@(!Model.OrderByRank)" asp-route-hideDone="@Model.HideDone">
-            @if (Model.OrderByRank)
-            {
-                <strong>Do not sort items by rank</strong>
-            }
-            else
-            {
-                <strong>Sort items by rank</strong>
-            }
-        </a>
-    </div>
+        </ul>
+        <div>
+            <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@Model.OrderByRank" asp-route-hideDone="@(!Model.HideDone)">
+                @if (Model.HideDone)
+                {
+                    <strong>Show done items</strong>
+                }
+                else
+                {
+                    <strong>Hide done items</strong>
+                }
+            </a>
+        </div>
+
+        <div>
+            <a asp-action="Detail" asp-route-todoListId="@Model.TodoListId" asp-route-orderByRank="@(!Model.OrderByRank)" asp-route-hideDone="@Model.HideDone">
+                @if (Model.OrderByRank)
+                {
+                    <strong>Do not sort items by rank</strong>
+                }
+                else
+                {
+                    <strong>Sort items by rank</strong>
+                }
+            </a>
+        </div>
+    }
+
+
 </div>
 @section Scripts{
     <script type="module">
