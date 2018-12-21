@@ -6,8 +6,6 @@ export const detailBuild = (url, todoListId) => {
   getJson(url + todoListId).then(todoList => {
     if (todoList.todoListId == todoListId) {
       todoList.items.forEach(todo => {
-        const { todoItemId, title, responsibleParty, importance, rank } = todo;
-
         const todoSummaryView = todoSummaryBuild(todo);
 
         const fragment = document

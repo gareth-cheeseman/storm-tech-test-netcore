@@ -7,7 +7,7 @@ export const todoSummaryBuild = todo => {
         return 'list-group-item-danger';
         break;
       case 2:
-        return 'list-group-item-infor';
+        return 'list-group-item-info';
         break;
       default:
         break;
