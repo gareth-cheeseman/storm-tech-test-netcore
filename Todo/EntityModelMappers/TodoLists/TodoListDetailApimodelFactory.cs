@@ -1,8 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using Todo.Data.Entities;
 using Todo.EntityModelMappers.TodoItems;
-using Todo.Models.TodoItems;
 using Todo.Models.TodoLists;
 
 namespace Todo.EntityModelMappers.TodoLists
@@ -11,9 +9,10 @@ namespace Todo.EntityModelMappers.TodoLists
     {
         public static TodoListDetailApimodel Create(TodoList todoList)
         {
-            var todos = todoList.Items.Select(TodoItemSummaryModelFactory.Create).ToList();
+            var items = todoList.Items.OrderBy(item => item.Importance);
+            var apiModelItems = items.Select(TodoItemSummaryModelFactory.Create).ToList();
 
-            return new TodoListDetailApimodel(todoList.TodoListId, todoList.Title, todos);
+            return new TodoListDetailApimodel(todoList.TodoListId, todoList.Title, apiModelItems);
         }
     }
 }
