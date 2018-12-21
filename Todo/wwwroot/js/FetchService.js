@@ -6,15 +6,6 @@ export const getJson = async url => {
   return response.json();
 };
 
-export const getBlob = async url => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw response;
-  }
-  console.log(response);
-  return response.blob;
-};
-
 export const postJson = async (url, body) => {
   const options = {
     method: 'POST',

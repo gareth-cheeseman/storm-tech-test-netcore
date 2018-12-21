@@ -1,5 +1,4 @@
-import { getBlob, getJson } from './FetchService.js';
-import { blobToDataUrl } from './ConvertBlob.js';
+import { getJson } from './FetchService.js';
 
 export const generateHash = email => {
   return SparkMD5.hash(email);
@@ -22,16 +21,15 @@ export const getUniqueHashes = () => {
 
 export const getGravatarName = () => {
   const hashes = getUniqueHashes();
-  hashes.forEach(hash => {
+  hashes.forEach(async hash => {
     const key = hash + 'name';
-    const gravatarNameObject = localStorage.getObject(key);
+    let gravatarNameObject = localStorage.getObject(key);
     if (!gravatarNameObject || gravatarNameObject.expiry < Date.now()) {
-      getJson(gravatarNameUrl(hash)).then(profile => {
-        const name = profile.entry[0].displayName;
-        const expiry = Date.now() + 64800000; // one week
-        gravatarNameObject = { name: name, expiry: expiry };
-        localStorage.setObject(key, gravatarNameObject);
-      });
+      const profile = await getJson(gravatarNameUrl(hash));
+      const name = profile.entry[0].displayName;
+      const expiry = Date.now() + 64800000; // one week
+      gravatarNameObject = { name: name, expiry: expiry };
+      localStorage.setObject(key, gravatarNameObject);
     }
     const elements = document.querySelectorAll(
       `[data-gravatar-name][data-hash="${hash}"]`

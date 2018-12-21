@@ -1,4 +1,4 @@
-import { generateHash, getGravatarName } from './Gravatar.js';
+import { generateHash } from './Gravatar.js';
 
 export const todoSummaryBuild = todo => {
   const getImportanceClass = impt => {
