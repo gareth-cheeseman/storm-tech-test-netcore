@@ -16,7 +16,7 @@ namespace Todo.Filters
             }
 
             var cookies = context.HttpContext.Request.Cookies;
-            if (cookies.ContainsKey("hasjs") && cookies["hasjs"].Equals(false))
+            if (cookies.ContainsKey("hasjs") && cookies["hasjs"].Equals("false"))
             {
                 ((Controller) context.Controller).ViewData.IsJavascriptOn(false);
             }
@@ -37,7 +37,7 @@ namespace Todo.Filters
         public void OnPageHandlerExecuting(PageHandlerExecutingContext context)
         {
             var cookies = context.HttpContext.Request.Cookies;
-            if (cookies.ContainsKey("hasjs") && cookies["hasjs"].Equals(false))
+            if (cookies.ContainsKey("hasjs") && cookies["hasjs"].Equals("false"))
             {
                 ((PageModel)context.HandlerInstance).PageContext.ViewData.IsJavascriptOn(false);
             }

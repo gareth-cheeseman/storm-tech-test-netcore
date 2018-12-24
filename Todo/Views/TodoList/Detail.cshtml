@@ -16,7 +16,8 @@
     @if (ViewData["IsJavascriptOn"].Equals(true)){
         <span hidden id="todoListId" data-todoListId="@Model.TodoListId"></span>
         <ul class="list-group" id="todoList"></ul>
-        <button id="orderByRank" click="orderByRank" data-orderedByRank="false">Order by rank</button>
+        <button id="hideDone" data-hidden-done="false">Hide done todos</button>
+        <button id="orderByRank" data-orderedByRank="false">Order by rank</button>
 
 
     }else{

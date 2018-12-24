@@ -16,16 +16,20 @@ export const todoSummaryBuild = todo => {
 
   const importanceClass = getImportanceClass(todo.importance);
 
-  const titleWithTag = todo.isDone ? `<s>${todo.title}</s>` : `${todo.title}`;
-
   const hash = generateHash(todo.responsibleParty.email);
 
-  const template = `<li class="list-group-item ${importanceClass}">
+  const hideDone =
+    document.querySelector('#hideDone').getAttribute('data-hidden-done') ==
+    'true';
+
+  const template = `<li class="list-group-item ${importanceClass}" data-isDone="${
+    todo.isDone
+  }"${hideDone && todo.isDone ? 'style="display:none"' : ''}>
     <div class="row">
       <div class="col-md-8">
-        <a href="/TodoItem/Edit?todoItemId=${
-          todo.todoItemId
-        }">${titleWithTag}</a>
+        <a href="/TodoItem/Edit?todoItemId=${todo.todoItemId}">${
+    todo.isDone ? `<s>${todo.title}</s>` : `${todo.title}`
+  }</a>
       </div>
     
       <div class="col-md-10">
