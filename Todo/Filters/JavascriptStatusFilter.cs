@@ -16,13 +16,13 @@ namespace Todo.Filters
             }
 
             var cookies = context.HttpContext.Request.Cookies;
-            if (cookies.ContainsKey("hasjs") && cookies["hasjs"].Equals(false))
+            if (cookies.ContainsKey("hasjs") && cookies["hasjs"].Equals("true"))
             {
-                ((Controller) context.Controller).ViewData.IsJavascriptOn(false);
+                ((Controller) context.Controller).ViewData.IsJavascriptOn(true);
             }
             else
             {
-                ((Controller) context.Controller).ViewData.IsJavascriptOn(true);
+                ((Controller) context.Controller).ViewData.IsJavascriptOn(false);
             }
         }
 
