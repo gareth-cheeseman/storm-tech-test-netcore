@@ -13,13 +13,14 @@
 
 <div class="col-md-6">
 
-    @if (ViewData["IsJavascriptOn"].Equals(true))
-    {
-        <ul class="list-group" id="todos"></ul>
+    @if (ViewData["IsJavascriptOn"].Equals(true)){
+        <span hidden id="todoListId" data-todoListId="@Model.TodoListId"></span>
+        <ul class="list-group" id="todoList"></ul>
+        <button id="hideDone" data-hidden-done="false">Hide done todos</button>
+        <button id="orderByRank" data-orderedByRank="false">Order by rank</button>
 
-    }
-    else
-    {
+
+    }else{
         <ul class="list-group">
 
             <li class="list-group-item">
