@@ -117,5 +117,12 @@
         import {detailBuild} from '../js/DetailBuilder.js';
         detailBuild("/api/TodoList/", "@Model.TodoListId")
     </script>
-    
+    <script type="module">
+        import {setOrderRankButton} from '../js/DetailBuilder.js';
+        setOrderRankButton();
+    </script>
+    <script type="module">
+        import {setShowHiddenButton} from '../js/DetailBuilder.js';
+        setShowHiddenButton();
+    </script>
 }
