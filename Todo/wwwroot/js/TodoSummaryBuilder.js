@@ -1,6 +1,4 @@
-import { generateHash } from './Gravatar.js';
-
-export const todoSummaryBuild = todo => {
+export const todoSummaryBuild = (todo, hash, hideDone) => {
   const getImportanceClass = impt => {
     switch (impt) {
       case 0:
@@ -16,15 +14,9 @@ export const todoSummaryBuild = todo => {
 
   const importanceClass = getImportanceClass(todo.importance);
 
-  const hash = generateHash(todo.responsibleParty.email);
-
-  const hideDone =
-    document.querySelector('#hideDone').getAttribute('data-hidden-done') ==
-    'true';
-
   const template = `<li class="list-group-item ${importanceClass}" data-isDone="${
     todo.isDone
-  }"${hideDone && todo.isDone ? 'style="display:none"' : ''}>
+  }" ${hideDone && todo.isDone ? 'style="display:none"' : ''}>
     <div class="row">
       <div class="col-md-8">
         <a href="/TodoItem/Edit?todoItemId=${todo.todoItemId}">${
@@ -43,7 +35,7 @@ export const todoSummaryBuild = todo => {
         <img data-gravatar-image data-hash="${hash}" src="../images/DefaultProfile.png" crossorigin="Anonymous"></small>
       </div>
     </div>
-    </li>`;
+  </li>`;
 
   return template;
 };

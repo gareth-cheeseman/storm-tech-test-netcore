@@ -1,6 +1,6 @@
 import { getJson } from './FetchService.js';
 import { todoSummaryBuild } from './TodoSummaryBuilder.js';
-import { getGravatarName, getGravatarImage } from './Gravatar.js';
+import { getGravatarName, getGravatarImage, generateHash } from './Gravatar.js';
 import { writeTemplateToDom } from './WriteToDom.js';
 import { removeChildren } from './removeChildren.js';
 
@@ -12,8 +12,12 @@ export async function detailBuild(url, todoListId) {
 
 export function todoListBuild(todoListItems) {
   removeChildren('#todoList');
+  const hideDone =
+    document.querySelector('#hideDone').getAttribute('data-hidden-done') ==
+    'true';
   todoListItems.forEach(todo => {
-    const todoSummaryView = todoSummaryBuild(todo);
+    const hash = generateHash(todo.responsibleParty.email);
+    const todoSummaryView = todoSummaryBuild(todo, hash, hideDone);
     writeTemplateToDom('#todoList', todoSummaryView);
   });
   getGravatarImage();
