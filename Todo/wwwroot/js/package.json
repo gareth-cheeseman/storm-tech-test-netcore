@@ -15,15 +15,11 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "jest": "^23.6.0",
+    "ramda": "^0.26.1",
     "regenerator-runtime": "^0.13.1"
   },
   "scripts": {
     "test": "jest"
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    }
   },
   "keywords": [],
   "author": "",
