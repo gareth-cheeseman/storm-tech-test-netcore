@@ -1,22 +1,22 @@
 expect.extend({
-  toEqualIgnoringWhiteSpace(received, actual) {
+  toEqualIgnoringWhiteSpace(received, expected) {
     const removeWhiteSpace = function(input) {
       return input.replace(/\s/g, '');
     };
 
     received = removeWhiteSpace(received);
-    actual = removeWhiteSpace(actual);
+    expected = removeWhiteSpace(expected);
 
-    const pass = received === actual;
+    const pass = received === expected;
 
     if (pass) {
       return {
-        message: () => `expected ${received} to be equal to ${actual}`,
+        message: () => `expected ${received} to be equal to ${expected}`,
         pass: true
       };
     } else {
       return {
-        message: () => `expected ${received} to be equal to ${actual}`,
+        message: () => `expected ${received} to be equal to ${expected}`,
         pass: false
       };
     }
